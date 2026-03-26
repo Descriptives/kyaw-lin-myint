@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyaw Lin Myint | Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#a855f7',
+                        'primary-dark': '#7e22ce',
+                        'primary-light': '#c084fc',
+                        secondary: '#111111',
+                        darkBg: '#000000',
+                        cardBg: '#0a0a0a',
+                        accent: '#ec4899',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #000000; color: #f8fafc; }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: #a855f7; transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .glass-nav { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(168, 85, 247, 0.15); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .purple-glow {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -15px rgba(168, 85, 247, 0.3);
+        }
+        .tech-tag {
+            transition: all 0.2s ease;
+        }
+        .tech-tag:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: #a855f7;
+            color: white;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+        .filter-btn.active {
+            background: #a855f7;
+            color: white;
+            border-color: #a855f7;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-primary selection:text-black">
+
+    <!-- Header / Nav -->
+    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer" onclick="location.href='../index.html'">
+                    <span class="text-2xl font-bold text-gradient">
+                        KLM
+                    </span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="../index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Home</a>
+                    <a href="../profile/index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Profile</a>
+                    <a href="index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Projects</a>
+                    <a href="../contact/index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Contact</a>
+                    <a href="../contact/index.html" class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg" style="box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.5);">
+                        Hire Me
+                    </a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cardBg border-t border-primary/20 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="../index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Home</a>
+                <a href="../profile/index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Profile</a>
+                <a href="index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Projects</a>
+                <a href="../contact/index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Contact</a>
+                <a href="../contact/index.html" onclick="toggleMobileMenu()" class="block w-full text-center mt-4 px-5 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors">Hire Me</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-20 min-h-screen bg-black">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            
+            <!-- Back to Home Link -->
+            <div class="mb-8 reveal">
+                <a href="../index.html" class="text-gray-400 hover:text-primary flex items-center gap-2 transition-colors w-fit">
+                    <i class="fas fa-arrow-left text-sm"></i> Back to Home
+                </a>
+            </div>
+
+            <!-- Page Header -->
+            <div class="text-center mb-12 reveal">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    My <span class="text-gradient">Projects</span>
+                </h1>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    A collection of my work in web development, AI systems, and software engineering
+                </p>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <!-- Project Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 reveal">
+                <div class="bg-cardBg border border-primary/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-gradient mb-1">10+</div>
+                    <div class="text-gray-400 text-sm">Projects Completed</div>
+                </div>
+                <div class="bg-cardBg border border-primary/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-gradient mb-1">5</div>
+                    <div class="text-gray-400 text-sm">Technologies</div>
+                </div>
+                <div class="bg-cardBg border border-primary/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-gradient mb-1">3</div>
+                    <div class="text-gray-400 text-sm">Major Projects</div>
+                </div>
+                <div class="bg-cardBg border border-primary/20 rounded-xl p-4 text-center">
+                    <div class="text-3xl font-bold text-gradient mb-1">2026</div>
+                    <div class="text-gray-400 text-sm">Current Year</div>
+                </div>
+            </div>
+
+            <!-- Featured Project -->
+            <section class="mb-16 reveal">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <i class="fas fa-star text-primary"></i>
+                    Featured Project
+                </h2>
+                
+                <div class="bg-gradient-to-r from-cardBg to-black border border-primary/30 rounded-2xl overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <div class="relative h-64 lg:h-auto overflow-hidden">
+                            <img src="../img/aerial.png" alt="Aerial Detection System" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent"></div>
+                        </div>
+                        <div class="p-8 lg:p-10 flex flex-col justify-center">
+                            <span class="text-primary text-sm font-semibold mb-2">AI & Computer Vision</span>
+                            <h3 class="text-2xl lg:text-3xl font-bold text-white mb-4">Aerial Objects Detection System</h3>
+                            <p class="text-gray-400 mb-6 leading-relaxed">
+                                An advanced AI-based automation system that utilizes state-of-the-art computer vision techniques to detect, track, and identify various aerial objects in real-time. This system can recognize multiple object types including aircraft, drones, and birds with high accuracy.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="tech-tag px-3 py-1 bg-black border border-primary/30 rounded-lg text-xs font-medium text-gray-300">Python</span>
+                                <span class="tech-tag px-3 py-1 bg-black border border-primary/30 rounded-lg text-xs font-medium text-gray-300">TensorFlow</span>
+                                <span class="tech-tag px-3 py-1 bg-black border border-primary/30 rounded-lg text-xs font-medium text-gray-300">OpenCV</span>
+                                <span class="tech-tag px-3 py-1 bg-black border border-primary/30 rounded-lg text-xs font-medium text-gray-300">YOLOv8</span>
+                                <span class="tech-tag px-3 py-1 bg-black border border-primary/30 rounded-lg text-xs font-medium text-gray-300">FastAPI</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <a href="#" class="px-6 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg flex items-center gap-2">
+                                    <i class="fas fa-eye"></i>
+                                    Live Demo
+                                </a>
+                                <a href="https://github.com/Descriptives" target="_blank" class="px-6 py-2.5 bg-black hover:bg-primary/20 text-white rounded-lg font-medium transition-all border border-gray-700 hover:border-primary flex items-center gap-2">
+                                    <i class="fab fa-github"></i>
+                                    Source Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Project Filters -->
+            <div class="flex flex-wrap gap-3 justify-center mb-10 reveal">
+                <button class="filter-btn active px-5 py-2 bg-cardBg border border-primary/30 rounded-full text-sm font-medium text-gray-300 hover:text-white transition-all" onclick="filterProjects('all')">All Projects</button>
+                <button class="filter-btn px-5 py-2 bg-cardBg border border-primary/30 rounded-full text-sm font-medium text-gray-300 hover:text-white transition-all" onclick="filterProjects('web')">Web Development</button>
+                <button class="filter-btn px-5 py-2 bg-cardBg border border-primary/30 rounded-full text-sm font-medium text-gray-300 hover:text-white transition-all" onclick="filterProjects('ai')">AI & ML</button>
+                <button class="filter-btn px-5 py-2 bg-cardBg border border-primary/30 rounded-full text-sm font-medium text-gray-300 hover:text-white transition-all" onclick="filterProjects('game')">Games</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal" id="projects-grid">
+                
+                <!-- Project 1: Frozenda (Web) -->
+                <div class="project-card bg-cardBg border border-primary/20 rounded-2xl overflow-hidden flex flex-col h-full" data-category="web">
+                    <div class="relative h-48 overflow-hidden group">
+                        <img src="../img/frozenta.png" alt="Frozenda" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-3 right-3 px-2 py-1 bg-primary/90 text-white text-xs font-semibold rounded">Web</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white mb-2">Frozenda</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">
+                            A fully functional e-commerce platform for air conditioners with product catalog, shopping cart, user authentication, and secure checkout process.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">PHP</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">MySQL</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Tailwind CSS</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">JavaScript</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800">
+                            <a href="#" class="text-primary hover:text-primary-light text-sm font-medium flex items-center gap-1 transition-colors">
+                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="https://github.com/Descriptives" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Aerial Detection (AI) -->
+                <div class="project-card bg-cardBg border border-primary/20 rounded-2xl overflow-hidden flex flex-col h-full" data-category="ai">
+                    <div class="relative h-48 overflow-hidden group">
+                        <img src="../img/aerial.png" alt="Aerial Detection System" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-3 right-3 px-2 py-1 bg-accent/90 text-white text-xs font-semibold rounded">AI/ML</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white mb-2">Aerial Objects Detection</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">
+                            AI-powered computer vision system that detects and classifies aerial objects in real-time using deep learning algorithms.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Python</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">TensorFlow</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">OpenCV</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">YOLO</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800">
+                            <a href="#" class="text-primary hover:text-primary-light text-sm font-medium flex items-center gap-1 transition-colors">
+                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="https://github.com/Descriptives" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Hangman MTK (Game) -->
+                <div class="project-card bg-cardBg border border-primary/20 rounded-2xl overflow-hidden flex flex-col h-full" data-category="game">
+                    <div class="relative h-48 overflow-hidden group">
+                        <img src="../img/hangmanMTK.png" alt="Hangman MTK" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-3 right-3 px-2 py-1 bg-green-600/90 text-white text-xs font-semibold rounded">Game</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white mb-2">Hangman MTK</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">
+                            An interactive browser-based hangman game with multiple categories, difficulty levels, and a sleek modern interface.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">JavaScript</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">HTML5</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">CSS3</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Canvas</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800">
+                            <a href="#" class="text-primary hover:text-primary-light text-sm font-medium flex items-center gap-1 transition-colors">
+                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="https://github.com/Descriptives" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Task Manager (Web) -->
+                <div class="project-card bg-cardBg border border-primary/20 rounded-2xl overflow-hidden flex flex-col h-full" data-category="web">
+                    <div class="relative h-48 overflow-hidden group">
+                        <img src="../img/taskmanager.png" alt="Task Manager" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-3 right-3 px-2 py-1 bg-primary/90 text-white text-xs font-semibold rounded">Web</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white mb-2">TaskFlow Manager</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">
+                            A full-stack task management application with real-time updates, team collaboration features, and progress tracking.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">React</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Node.js</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">MongoDB</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Socket.io</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800">
+                            <a href="#" class="text-primary hover:text-primary-light text-sm font-medium flex items-center gap-1 transition-colors">
+                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="https://github.com/Descriptives" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: AI Chatbot (AI) -->
+                <div class="project-card bg-cardBg border border-primary/20 rounded-2xl overflow-hidden flex flex-col h-full" data-category="ai">
+                    <div class="relative h-48 overflow-hidden group">
+                        <img src="../img/chatbot.png" alt="AI Chatbot" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-3 right-3 px-2 py-1 bg-accent/90 text-white text-xs font-semibold rounded">AI/ML</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white mb-2">EduBot - Educational Chatbot</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">
+                            An intelligent chatbot designed to help students with programming questions, built with NLP and machine learning.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Python</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">NLTK</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Flask</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Transformers</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800">
+                            <a href="#" class="text-primary hover:text-primary-light text-sm font-medium flex items-center gap-1 transition-colors">
+                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="https://github.com/Descriptives" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Memory Game (Game) -->
+                <div class="project-card bg-cardBg border border-primary/20 rounded-2xl overflow-hidden flex flex-col h-full" data-category="game">
+                    <div class="relative h-48 overflow-hidden group">
+                        <img src="../img/memorygame.png" alt="Memory Game" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cardBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-3 right-3 px-2 py-1 bg-green-600/90 text-white text-xs font-semibold rounded">Game</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-white mb-2">Neon Memory Cards</h3>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">
+                            A colorful and engaging memory matching game with multiple difficulty levels, animations, and high score tracking.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">React</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Framer Motion</span>
+                            <span class="tech-tag px-2 py-1 bg-black border border-primary/30 rounded text-xs font-medium text-gray-300">Tailwind</span>
+                        </div>
+                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-800">
+                            <a href="#" class="text-primary hover:text-primary-light text-sm font-medium flex items-center gap-1 transition-colors">
+                                View Details <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="https://github.com/Descriptives" target="_blank" class="text-gray-400 hover:text-primary transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- GitHub Section -->
+            <section class="mt-20 reveal">
+                <div class="bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-3xl p-8 md:p-12 text-center">
+                    <i class="fab fa-github text-6xl text-gray-400 mb-4"></i>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Want to see more?</h2>
+                    <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                        Check out my GitHub repository for more projects, contributions, and code samples. I'm constantly working on new ideas and improving my skills.
+                    </p>
+                    <a href="https://github.com/Descriptives" target="_blank" class="inline-flex items-center gap-2 px-8 py-3.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg purple-glow">
+                        <i class="fab fa-github"></i>
+                        Visit My GitHub
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-cardBg border-t border-primary/10 pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Brand Info -->
+                <div class="lg:col-span-2">
+                    <div class="cursor-pointer mb-4 inline-block" onclick="location.href='../index.html'; window.scrollTo(0,0);">
+                        <span class="text-2xl font-bold text-gradient">
+                            Kyaw Lin Myint.
+                        </span>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm">
+                        "Building innovative solutions with code and creativity."
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Home</a></li>
+                        <li><a href="../profile/index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Profile</a></li>
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Projects</a></li>
+                        <li><a href="../contact/index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Projects Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Projects</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary text-sm transition-colors">Frozenda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary text-sm transition-colors">Aerial Detection System</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary text-sm transition-colors">Hangman MTK</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-primary/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2026 Kyaw Lin Myint. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://github.com/Descriptives" target="_blank" class="text-gray-500 hover:text-primary transition-colors"><i class="fab fa-github text-lg"></i></a>
+                    <a href="https://www.linkedin.com/in/kyaw-lin-myint-0034793b6" target="_blank" class="text-gray-500 hover:text-primary transition-colors"><i class="fab fa-linkedin-in text-lg"></i></a>
+                    <a href="https://discord.com/users/1235146520773267561" target="_blank" class="text-gray-500 hover:text-primary transition-colors"><i class="fab fa-discord text-lg"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            menu.classList.toggle('hidden');
+        }
+        if (btn) {
+            btn.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Project Filtering
+        function filterProjects(category) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter projects
+            const projects = document.querySelectorAll('.project-card');
+            projects.forEach(project => {
+                if (category === 'all' || project.dataset.category === category) {
+                    project.style.display = 'flex';
+                } else {
+                    project.style.display = 'none';
+                }
+            });
+        }
+
+        // Scroll Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
