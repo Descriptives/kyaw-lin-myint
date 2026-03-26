@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyaw Lin Myint | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#a855f7', // Purple
+                        'primary-dark': '#7e22ce',
+                        'primary-light': '#c084fc',
+                        secondary: '#111111',
+                        darkBg: '#000000',
+                        cardBg: '#0a0a0a',
+                        accent: '#ec4899', // Pink/Magenta accent
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'blob': 'blob 7s infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)' },
+                            '100%': { boxShadow: '0 0 40px rgba(168, 85, 247, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #000000; color: #f8fafc; }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: #a855f7; transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        .glass-nav { background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(168, 85, 247, 0.15); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .purple-glow {
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #2a00fd 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ec4899; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden selection:bg-primary selection:text-black">
+
+    <!-- Header / Nav -->
+    <header class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 cursor-pointer" onclick="location.href='index.html'">
+                    <span class="text-2xl font-bold text-gradient">
+                        KLM
+                    </span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Home</a>
+                    <a href="profile/index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Profile</a>
+                    <a href="projects/index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Projects</a>
+                    <a href="contact/index.html" class="nav-link text-gray-300 hover:text-white font-medium transition-colors text-sm uppercase tracking-wider">Contact</a>
+                    <a href="contact/index.html" class="px-5 py-2.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-all transform hover:scale-105 shadow-lg" style="box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.5);">
+                        Hire Me
+                    </a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cardBg border-t border-primary/20 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Home</a>
+                <a href="profile/index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Profile</a>
+                <a href="projects/index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Projects</a>
+                <a href="contact/index.html" onclick="toggleMobileMenu()" class="block px-3 py-3 text-base font-medium text-gray-300 hover:text-white hover:bg-primary/20 rounded-md">Contact</a>
+                <a href="contact/index.html" onclick="toggleMobileMenu()" class="block w-full text-center mt-4 px-5 py-3 bg-primary hover:bg-primary-dark text-white rounded-lg font-medium transition-colors">Hire Me</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <div id="main-content">
+        
+        <!-- === HOME PAGE VIEW === -->
+        <div id="page-home" class="block">
+            
+            <!-- Hero Section -->
+            <section id="hero" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-black">
+                <!-- Background decoration - Purple/Magenta blobs -->
+                <div class="absolute top-0 -left-4 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+                <div class="absolute top-0 -right-4 w-72 h-72 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+                <div class="absolute -bottom-8 left-20 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+
+                <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
+                    <div class="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-8">
+                        
+                        <!-- Hero Text -->
+                        <div class="w-full lg:w-3/5 text-center lg:text-left animate-fade-in-up">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary-light text-sm font-medium mb-6">
+                                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                Available for new opportunities
+                            </div>
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4">
+                                Hello, I'm <span class="text-gradient">Kyaw Lin Myint</span>
+                            </h1>
+                            <h2 class="text-xl sm:text-2xl text-gray-400 font-medium mb-6">
+                                Computer Science Student & Aspiring Software Developer
+                            </h2>
+                            <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                                I am a passionate computing student based in Yangon, with experience in web development, AI systems, and software engineering. I enjoy building innovative digital solutions and continuously improving my technical skills.
+                            </p>
+                            
+                            <!-- Buttons -->
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                                <a href="projects/index.html" class="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold transition-all shadow-lg flex items-center justify-center gap-2 purple-glow">
+                                    View My Projects
+                                    <i class="fas fa-arrow-right text-sm"></i>
+                                </a>
+                                <a href="contact/index.html" class="w-full sm:w-auto px-8 py-3.5 bg-transparent border border-gray-700 hover:border-primary hover:bg-primary/10 text-white rounded-lg font-semibold transition-all flex items-center justify-center gap-2">
+                                    Contact Me
+                                </a>
+                                <a href="#" class="w-full sm:w-auto px-8 py-3.5 text-gray-300 hover:text-white font-medium transition-colors flex items-center justify-center gap-2 group">
+                                    <i class="fas fa-download group-hover:-translate-y-1 transition-transform"></i>
+                                    Download CV
+                                </a>
+                            </div>
+                            
+                            <!-- Basic Info -->
+                            <div class="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-500 font-medium">
+                                <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-primary"></i> Born: 5 Jan 2004</div>
+                                <div class="flex items-center gap-2"><i class="fas fa-map-marker-alt text-primary"></i> North Dagon, Yangon, Myanmar</div>
+                            </div>
+                        </div>
+
+                        <!-- Hero Image -->
+                        <div class="w-full lg:w-2/5 flex justify-center lg:justify-end animate-fade-in-up" style="animation-delay: 0.2s;">
+                            <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+                                <!-- Decorative rings -->
+                                <div class="absolute inset-0 rounded-full border-2 border-dashed border-primary/30 animate-[spin_20s_linear_infinite]"></div>
+                                <div class="absolute inset-4 rounded-full border border-accent/30 animate-[spin_15s_linear_infinite_reverse]"></div>
+                                
+                                <!-- Profile Image -->
+                                <img src="./img/kyaw_linmyint.jpg" 
+                                     alt="Kyaw Lin Myint Profile" 
+                                     class="absolute inset-8 w-[calc(100%-4rem)] h-[calc(100%-4rem)] object-cover rounded-full border-4 border-cardBg shadow-2xl shadow-primary/20 z-10 transition-transform hover:scale-105 duration-500">
+                                
+                                <!-- Floating Badge -->
+                                <div class="absolute bottom-6 -left-6 bg-cardBg border border-primary/30 rounded-xl p-3 shadow-xl z-20 animate-bounce">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                                            <i class="fas fa-code"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs text-gray-400">Developer</p>
+                                            <p class="text-sm font-bold text-gradient">Full Stack</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Academic Background Section -->
+            <section id="profile" class="py-24 bg-black relative z-10 border-t border-primary/10">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div class="text-center mb-16 reveal">
+                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Education</h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white">Academic Background</h3>
+                        <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-6 rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+                        <!-- Card 1 -->
+                        <div class="bg-cardBg border border-primary/20 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-lg relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+                            
+                            <div class="flex items-center gap-4 mb-6 relative z-10">
+                                <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary text-2xl">
+                                    <i class="fas fa-university"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">2023 – 2025</span>
+                                    <h4 class="text-xl font-bold text-white mt-2">Info Myanmar University</h4>
+                                </div>
+                            </div>
+                            <h5 class="text-lg font-medium text-gray-300 mb-3 relative z-10">Higher National Diploma in Computing</h5>
+                            <p class="text-gray-400 text-sm leading-relaxed relative z-10">
+                                Built a strong foundation in computing fundamentals, studying core aspects of software development, database management, and technical skills necessary for modern web and application development.
+                            </p>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-cardBg border border-primary/20 rounded-2xl p-8 hover:-translate-y-2 transition-transform duration-300 shadow-lg relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+                            
+                            <div class="flex items-center gap-4 mb-6 relative z-10">
+                                <div class="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center text-accent text-2xl">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-semibold text-accent bg-accent/10 px-3 py-1 rounded-full">2026 – 2027</span>
+                                    <h4 class="text-xl font-bold text-white mt-2">Edinburgh Napier University (UK)</h4>
+                                </div>
+                            </div>
+                            <h5 class="text-lg font-medium text-gray-300 mb-3 relative z-10">Bachelor of Computer Science</h5>
+                            <p class="text-gray-400 text-sm leading-relaxed relative z-10">
+                                Focusing on advanced computing concepts, software engineering methodologies, artificial intelligence technologies, and comprehensive system development.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="py-24 bg-cardBg relative z-10 border-t border-primary/10">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div class="text-center mb-16 reveal">
+                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Expertise</h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white">Technical Skills</h3>
+                        <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-6 rounded-full"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal">
+                        <!-- Frontend -->
+                        <div class="bg-black border border-primary/20 rounded-2xl p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <i class="fas fa-laptop-code text-primary text-xl"></i>
+                                <h4 class="text-xl font-bold text-white">Frontend</h4>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-html5 text-orange-500"></i> HTML
+                                </span>
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-css3-alt text-blue-500"></i> CSS
+                                </span>
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-js text-yellow-400"></i> JavaScript
+                                </span>
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-react text-cyan-400"></i> React
+                                </span>
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg> Tailwind CSS
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Backend -->
+                        <div class="bg-black border border-primary/20 rounded-2xl p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <i class="fas fa-server text-primary text-xl"></i>
+                                <h4 class="text-xl font-bold text-white">Backend</h4>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-php text-primary"></i> PHP
+                                </span>
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fas fa-database text-primary"></i> MySQL
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Tools -->
+                        <div class="bg-black border border-primary/20 rounded-2xl p-8">
+                            <div class="flex items-center gap-3 mb-6">
+                                <i class="fas fa-tools text-primary text-xl"></i>
+                                <h4 class="text-xl font-bold text-white">Programming & Tools</h4>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-500"></i> Python
+                                </span>
+                                <span class="px-4 py-2 bg-cardBg border border-gray-800 rounded-lg text-sm font-medium text-gray-300 hover:text-primary hover:border-primary transition-colors flex items-center gap-2">
+                                    <i class="fab fa-figma text-pink-400"></i> Figma
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="py-24 bg-black relative z-10 border-t border-primary/10">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div class="flex flex-col sm:flex-row items-center justify-between mb-16 gap-6 reveal">
+                        <div class="text-center sm:text-left">
+                            <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Portfolio</h2>
+                            <h3 class="text-3xl md:text-4xl font-bold text-white">Featured Projects</h3>
+                        </div>
+                        <a href="projects/index.html" class="hidden sm:inline-flex items-center gap-2 px-6 py-2.5 bg-cardBg hover:bg-primary/20 text-white rounded-lg font-medium transition-colors border border-primary/30">
+                            View All Projects
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
+                        
+                        <!-- Project 1 -->
+                        <div class="bg-cardBg border border-primary/20 rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300 shadow-lg flex flex-col h-full">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="./img/frozenta.png" alt="Frozenda Project" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent opacity-80"></div>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h4 class="text-xl font-bold text-white mb-2">Frozenda</h4>
+                                <p class="text-gray-400 text-sm mb-4 flex-grow">
+                                    Air conditioner e-commerce platform designed for browsing and purchasing AC products with a clean, user-friendly interface.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">PHP</span>
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">MySQL</span>
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">Tailwind</span>
+                                </div>
+                                <div class="flex items-center gap-3 mt-auto">
+                                    <a href="#" class="flex-1 text-center py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-semibold transition-colors">
+                                        View Details
+                                    </a>
+                                    <a href="https://github.com/Descriptives" target="_blank" class="p-2 bg-black hover:bg-primary/20 text-gray-300 rounded-lg transition-colors" title="GitHub">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="bg-cardBg border border-primary/20 rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300 shadow-lg flex flex-col h-full">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="./img/aerial.png" alt="Aerial Detection" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent opacity-80"></div>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h4 class="text-xl font-bold text-white mb-2">Aerial Objects Detection System</h4>
+                                <p class="text-gray-400 text-sm mb-4 flex-grow">
+                                    AI-based automation system that utilizes computer vision techniques to detect and identify various aerial objects accurately.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">Python</span>
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">AI/ML</span>
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">OpenCV</span>
+                                </div>
+                                <div class="flex items-center gap-3 mt-auto">
+                                    <a href="#" class="flex-1 text-center py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-semibold transition-colors">
+                                        View Details
+                                    </a>
+                                    <a href="https://github.com/Descriptives" target="_blank" class="p-2 bg-black hover:bg-primary/20 text-gray-300 rounded-lg transition-colors" title="GitHub">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="bg-cardBg border border-primary/20 rounded-2xl overflow-hidden group hover:-translate-y-2 transition-transform duration-300 shadow-lg flex flex-col h-full">
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="./img/hangmanMTK.png" alt="Hangman MTK" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-cardBg to-transparent opacity-80"></div>
+                            </div>
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h4 class="text-xl font-bold text-white mb-2">Hangman MTK</h4>
+                                <p class="text-gray-400 text-sm mb-4 flex-grow">
+                                    A mini offline hangman game project featuring classic word-guessing gameplay with an intuitive graphical interface.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">JavaScript</span>
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">HTML5</span>
+                                    <span class="text-xs font-medium text-gray-300 bg-black px-2 py-1 rounded border border-primary/20">CSS3</span>
+                                </div>
+                                <div class="flex items-center gap-3 mt-auto">
+                                    <a href="#" class="flex-1 text-center py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg text-sm font-semibold transition-colors">
+                                        View Details
+                                    </a>
+                                    <a href="https://github.com/Descriptives" target="_blank" class="p-2 bg-black hover:bg-primary/20 text-gray-300 rounded-lg transition-colors" title="GitHub">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Mobile view more button -->
+                    <div class="mt-12 text-center sm:hidden reveal">
+                        <a href="projects/index.html" class="inline-flex items-center gap-2 px-6 py-3 bg-cardBg hover:bg-primary/20 text-white rounded-lg font-medium transition-colors border border-primary/30 w-full justify-center">
+                            View All Projects
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-24 bg-cardBg relative z-10 border-t border-primary/10">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div class="text-center mb-16 reveal">
+                        <h2 class="text-sm font-bold tracking-widest text-primary uppercase mb-2">Contact</h2>
+                        <h3 class="text-3xl md:text-4xl font-bold text-white">Get In Touch</h3>
+                        <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-6 rounded-full"></div>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-12 reveal">
+                        <!-- Contact Info -->
+                        <div class="w-full lg:w-1/3">
+                            <h4 class="text-2xl font-bold text-white mb-6">Let's connect</h4>
+                            <p class="text-gray-400 mb-8 leading-relaxed">
+                                I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                            </p>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-primary flex-shrink-0">
+                                        <i class="fas fa-envelope text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-white font-medium mb-1">Email</h5>
+                                        <a href="mailto:kyawlinmyint@example.com" class="text-gray-400 hover:text-primary transition-colors text-sm">kyawlinmyint@example.com</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-black rounded-xl flex items-center justify-center text-primary flex-shrink-0">
+                                        <i class="fas fa-map-marker-alt text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-white font-medium mb-1">Location</h5>
+                                        <p class="text-gray-400 text-sm">North Dagon, Yangon, Myanmar</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-10">
+                                <h5 class="text-white font-medium mb-4">Social Profiles</h5>
+                                <div class="flex gap-4">
+                                    <a href="https://github.com/Descriptives" target="_blank" class="w-10 h-10 bg-black hover:bg-primary rounded-full flex items-center justify-center text-gray-300 hover:text-white transition-all hover:-translate-y-1">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/kyaw-lin-myint-0034793b6" target="_blank" class="w-10 h-10 bg-black hover:bg-primary rounded-full flex items-center justify-center text-gray-300 hover:text-white transition-all hover:-translate-y-1">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="https://discord.com/users/1235146520773267561" target="_blank" class="w-10 h-10 bg-black hover:bg-primary rounded-full flex items-center justify-center text-gray-300 hover:text-white transition-all hover:-translate-y-1">
+                                        <i class="fab fa-discord"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Form -->
+                        <div class="w-full lg:w-2/3 bg-black border border-primary/20 rounded-2xl p-8 shadow-lg">
+                            <form onsubmit="handleFormSubmit(event)" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label for="name" class="text-sm font-medium text-gray-300">Your Name</label>
+                                        <input type="text" id="name" required class="w-full bg-cardBg border border-gray-800 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="lia">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label for="email" class="text-sm font-medium text-gray-300">Your Email</label>
+                                        <input type="email" id="email" required class="w-full bg-cardBg border border-gray-800 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="lia@example.com">
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="message" class="text-sm font-medium text-gray-300">Message</label>
+                                    <textarea id="message" required rows="5" class="w-full bg-cardBg border border-gray-800 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none" placeholder="Hello, I'd like to talk about..."></textarea>
+                                </div>
+                                <button type="submit" class="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primary-dark text-white rounded-lg font-semibold transition-all shadow-lg flex items-center justify-center gap-2 purple-glow">
+                                    <i class="fas fa-paper-plane text-sm"></i>
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-cardBg border-t border-primary/10 pt-16 pb-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <!-- Brand Info -->
+                <div class="lg:col-span-2">
+                    <div class="cursor-pointer mb-4 inline-block" onclick="location.href='index.html'; window.scrollTo(0,0);">
+                        <span class="text-2xl font-bold text-gradient">
+                            Kyaw Lin Myint.
+                        </span>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm">
+                        "Building innovative solutions with code and creativity."
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Home</a></li>
+                        <li><a href="profile/index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Profile</a></li>
+                        <li><a href="projects/index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Projects</a></li>
+                        <li><a href="contact/index.html" class="text-gray-400 hover:text-primary text-sm transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Projects Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Projects</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary text-sm transition-colors">Frozenda</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary text-sm transition-colors">Aerial Detection System</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary text-sm transition-colors">Hangman MTK</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-primary/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2026 Kyaw Lin Myint. All rights reserved.
+                </p>
+                <div class="flex gap-4">
+                    <a href="https://github.com/Descriptives" target="_blank" class="text-gray-500 hover:text-primary transition-colors"><i class="fab fa-github text-lg"></i></a>
+                    <a href="https://www.linkedin.com/in/kyaw-lin-myint-0034793b6" target="_blank" class="text-gray-500 hover:text-primary transition-colors"><i class="fab fa-linkedin-in text-lg"></i></a>
+                    <a href="https://discord.com/users/1235146520773267561" target="_blank" class="text-gray-500 hover:text-primary transition-colors"><i class="fab fa-discord text-lg"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        function toggleMobileMenu() {
+            menu.classList.toggle('hidden');
+        }
+        if (btn) {
+            btn.addEventListener('click', toggleMobileMenu);
+        }
+
+        // Form submission (Mailto functionality)
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            const subject = encodeURIComponent("Portfolio Contact");
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nDiscord ID: 1235146520773267561\n\nMessage:\n${message}`);
+            
+            // Open default email client
+            window.location.href = `mailto:kyawlinmyint@example.com?subject=${subject}&body=${body}`;
+        }
+
+        // Scroll Animations using Intersection Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg');
+            } else {
+                nav.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+</body>
+</html>
